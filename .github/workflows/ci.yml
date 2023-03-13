@@ -31,6 +31,11 @@ jobs:
 #    with:
 #      tox-source: "./core[dev]"
 
+  python-test:
+    name: Python Test
+    runs-on: ubuntu-20.04
+    run: /usr/bin/python3.10 -c "import tempfile"
+
   package:
     name: Python Package
     uses: beeware/.github/.github/workflows/python-package-create.yml@main
@@ -63,8 +68,8 @@ jobs:
         include:
           - experimental: false
 
-          - python-version: "3.12-dev"
-            experimental: true
+#          - python-version: "3.12-dev"
+#            experimental: true
     steps:
     - uses: actions/checkout@v3.3.0
     - name: Set up Python ${{ matrix.python-version }}

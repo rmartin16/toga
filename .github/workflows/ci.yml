@@ -41,16 +41,16 @@ jobs:
     strategy:
       matrix:
         subdir:
-#        - "android"
-#        - "cocoa"
+        - "android"
+        - "cocoa"
         - "core"
-#        - "demo"
-#        - "dummy"
+        - "demo"
+        - "dummy"
         - "gtk"
-#        - "iOS"
-#        - "toga"
-#        - "web"
-#        - "winforms"
+        - "iOS"
+        - "toga"
+        - "web"
+        - "winforms"
 
   core:
     runs-on: ${{ matrix.platform }}-latest

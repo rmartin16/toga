@@ -34,7 +34,8 @@ jobs:
   python-test:
     name: Python Test
     runs-on: ubuntu-20.04
-    run: /usr/bin/python3.10 -c "import tempfile"
+    steps:
+      - run: /usr/bin/python3.10 -c "import tempfile"
 
   package:
     name: Python Package

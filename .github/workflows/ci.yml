@@ -237,7 +237,8 @@ jobs:
     - name: Test App
       run: |
         cd testbed
-        unset LD_LIBRARY_PATH && briefcase run ${{ matrix.backend }} -v --test ${{ matrix.briefcase-run-args }}
+        unset LD_LIBRARY_PATH
+        ${{ matrix.briefcase-run-prefix }} briefcase run ${{ matrix.backend }} -v --test ${{ matrix.briefcase-run-args }}
     - name: Upload logs
       uses: actions/upload-artifact@v3.1.2
       if: failure() || failure()

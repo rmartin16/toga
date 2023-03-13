@@ -35,7 +35,9 @@ jobs:
     name: Python Test
     runs-on: ubuntu-20.04
     steps:
-      - run: /usr/bin/python3 -c "import tempfile"
+      - run: |
+          export PYTHONPATH="/usr/lib/python3.10;/usr/lib/python3.10/lib-dynload"
+          /usr/bin/python3 -c "import tempfile"
 
   package:
     name: Python Package

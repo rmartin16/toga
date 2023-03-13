@@ -33,7 +33,7 @@ jobs:
 
   python-test:
     name: Python Test
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - run: |
           export PYTHONPATH="/usr/lib/python3.10;/usr/lib/python3.10/lib-dynload"

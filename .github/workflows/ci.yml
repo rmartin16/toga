@@ -42,6 +42,7 @@ jobs:
           ls -lh /usr/lib
           ls -lh /usr/lib/python3.10
           ls -lh /usr/lib/python3.10/lib-dynload
+          ls -lh /lib/x86_64-linux-gnu/
 
   package:
     name: Python Package

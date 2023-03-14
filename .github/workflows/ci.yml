@@ -231,8 +231,7 @@ jobs:
       run: |
         ${{ matrix.pre-command }}
         # Use the development version of Briefcase
-        python -m pip install git+https://github.com/rmartin16/briefcase.git@test-install
-        which briefcase
+        python -m pip install git+https://github.com/beeware/briefcase.git
     - name: Test App
       run: |
         cd testbed

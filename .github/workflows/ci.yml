@@ -58,7 +58,7 @@ jobs:
 
   core:
     runs-on: ${{ matrix.platform }}-latest
-    needs: [pre-commit, towncrier, package]
+    needs: [package]
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:

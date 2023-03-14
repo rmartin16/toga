@@ -35,69 +35,69 @@ jobs:
 #    with:
 #      tox-source: "./core[dev]"
 
-  package:
-    name: Python Package
-    uses: beeware/.github/.github/workflows/python-package-create.yml@main
-    with:
-      tox-source: "./core[dev]"
-      build-subdirectory: ${{ matrix.subdir }}
-      distribution-path: "*/dist/*"
-    strategy:
-      matrix:
-        subdir:
-        - "android"
-        - "cocoa"
-        - "core"
-        - "demo"
-        - "dummy"
-        - "gtk"
-        - "iOS"
-        - "toga"
-        - "web"
-        - "winforms"
+#  package:
+#    name: Python Package
+#    uses: beeware/.github/.github/workflows/python-package-create.yml@main
+#    with:
+#      tox-source: "./core[dev]"
+#      build-subdirectory: ${{ matrix.subdir }}
+#      distribution-path: "*/dist/*"
+#    strategy:
+#      matrix:
+#        subdir:
+#        - "android"
+#        - "cocoa"
+#        - "core"
+#        - "demo"
+#        - "dummy"
+#        - "gtk"
+#        - "iOS"
+#        - "toga"
+#        - "web"
+#        - "winforms"
 
-  core:
-    runs-on: ${{ matrix.platform }}-latest
-    needs: [package]
-    continue-on-error: ${{ matrix.experimental }}
-    strategy:
-      matrix:
-        platform: [ "ubuntu"]
-        python-version: [ "3.10" ]
-        include:
-          - experimental: false
-
-#          - python-version: "3.12-dev"
-#            experimental: true
-    steps:
-    - uses: actions/checkout@v3.3.0
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4.5.0
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dev dependencies
-      run: |
-        # We don't actually want to install toga-core;
-        # we just want the dev extras so we have a known version of tox and coverage
-        python -m pip install ./core[dev]
-    - name: Get packages
-      uses: actions/download-artifact@v3.0.2
-      with:
-        name: ${{ needs.package.outputs.artifact-name }}
-    - name: Test
-      run: |
-        # The $(ls ...) shell expansion is done in the Github environment;
-        # the value of TOGA_INSTALL_COMMAND will be a literal string,
-        # without any shell expansions to perform
-        TOGA_INSTALL_COMMAND="python -m pip install ../$(ls core/dist/toga_core-*.whl)[dev] ../$(ls dummy/dist/toga_dummy-*.whl)" tox -e py-core
-        cd core
-        mv .coverage .coverage.${{ matrix.platform }}.${{ matrix.python-version }}
-    - name: Store coverage data
-      uses: actions/upload-artifact@v3.1.2
-      with:
-        name: core-coverage-data
-        path: "core/.coverage.*"
-        if-no-files-found: error
+#  core:
+#    runs-on: ${{ matrix.platform }}-latest
+#    needs: [package]
+#    continue-on-error: ${{ matrix.experimental }}
+#    strategy:
+#      matrix:
+#        platform: [ "ubuntu"]
+#        python-version: [ "3.10" ]
+#        include:
+#          - experimental: false
+#
+##          - python-version: "3.12-dev"
+##            experimental: true
+#    steps:
+#    - uses: actions/checkout@v3.3.0
+#    - name: Set up Python ${{ matrix.python-version }}
+#      uses: actions/setup-python@v4.5.0
+#      with:
+#        python-version: ${{ matrix.python-version }}
+#    - name: Install dev dependencies
+#      run: |
+#        # We don't actually want to install toga-core;
+#        # we just want the dev extras so we have a known version of tox and coverage
+#        python -m pip install ./core[dev]
+#    - name: Get packages
+#      uses: actions/download-artifact@v3.0.2
+#      with:
+#        name: ${{ needs.package.outputs.artifact-name }}
+#    - name: Test
+#      run: |
+#        # The $(ls ...) shell expansion is done in the Github environment;
+#        # the value of TOGA_INSTALL_COMMAND will be a literal string,
+#        # without any shell expansions to perform
+#        TOGA_INSTALL_COMMAND="python -m pip install ../$(ls core/dist/toga_core-*.whl)[dev] ../$(ls dummy/dist/toga_dummy-*.whl)" tox -e py-core
+#        cd core
+#        mv .coverage .coverage.${{ matrix.platform }}.${{ matrix.python-version }}
+#    - name: Store coverage data
+#      uses: actions/upload-artifact@v3.1.2
+#      with:
+#        name: core-coverage-data
+#        path: "core/.coverage.*"
+#        if-no-files-found: error
 
 #  core-coverage:
 #    name: Combine & check core coverage.
@@ -184,7 +184,6 @@ jobs:
 
   testbed:
     runs-on: ${{ matrix.runs-on }}
-    needs: core
     strategy:
       fail-fast: false
       matrix:

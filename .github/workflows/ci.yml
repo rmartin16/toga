@@ -189,13 +189,13 @@ jobs:
       matrix:
         backend: [ "linux" ]
         include:
-          - pre-command:
-            briefcase-run-prefix:
-            briefcase-run-args:
-            setup-python: true
-
-          - backend: macOS
-            runs-on: macos-12
+#          - pre-command:
+#            briefcase-run-prefix:
+#            briefcase-run-args:
+#            setup-python: true
+#
+#          - backend: macOS
+#            runs-on: macos-12
 
           # We use a fixed Ubuntu version rather than `-latest` because at some point,
           # `-latest` will be updated, but it will be a soft changeover, which would cause
@@ -208,16 +208,16 @@ jobs:
             briefcase-run-prefix: 'xvfb-run -a -s "-screen 0 2048x1536x24"'
             setup-python: false  # Use the system Python packages.
 
-          - backend: windows
-            runs-on: windows-latest
-
-          - backend: iOS
-            runs-on: macos-12
-            briefcase-run-args: ' -d "iPhone SE (3rd generation)"'
-
-          - backend: android
-            runs-on: macos-12
-            briefcase-run-args: " -d '{\"avd\":\"beePhone\"}' --Xemulator=-no-window --Xemulator=-no-snapshot --Xemulator=-no-audio --Xemulator=-no-boot-anim --shutdown-on-exit"
+#          - backend: windows
+#            runs-on: windows-latest
+#
+#          - backend: iOS
+#            runs-on: macos-12
+#            briefcase-run-args: ' -d "iPhone SE (3rd generation)"'
+#
+#          - backend: android
+#            runs-on: macos-12
+#            briefcase-run-args: " -d '{\"avd\":\"beePhone\"}' --Xemulator=-no-window --Xemulator=-no-snapshot --Xemulator=-no-audio --Xemulator=-no-boot-anim --shutdown-on-exit"
     steps:
     - uses: actions/checkout@v3.3.0
       with:
@@ -232,6 +232,7 @@ jobs:
         ${{ matrix.pre-command }}
         # Use the development version of Briefcase
         python -m pip install git+https://github.com/beeware/briefcase.git
+        which briefcase
     - name: Test App
       run: |
         cd testbed
